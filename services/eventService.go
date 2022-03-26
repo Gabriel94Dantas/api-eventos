@@ -1,37 +1,44 @@
 package services
 
 import (
-	"context"
+	"fmt"
 
-	kafka "github.com/segmentio/kafka-go"
+	confluentKafka "github.com/confluentinc/confluent-kafka-go/kafka"
 
+	contex "facade-golang/api-eventos/contexts"
 	model "facade-golang/api-eventos/models"
-)
-
-const (
-	broker1Address = "localhost:9092"
 )
 
 func InsertEventOnTopic(event model.Event) {
 	model.Events = append(model.Events, event)
-	produceMessage(event, context.Background())
+	produceMessage(event)
 }
 
-func produceMessage(event model.Event, context context.Context) {
-	configurantion := kafka.WriterConfig{
-		Brokers: []string{broker1Address},
-		Topic:   event.Type,
-	}
+func produceMessage(event model.Event) {
+	p := contex.KafkaConnection()
 
-	message := kafka.Message{
-		Key:   []byte(event.Id),
-		Value: model.EventToJson(event),
-	}
+	defer p.Close()
 
-	writer := kafka.NewWriter(configurantion)
+	// Delivery report handler for produced messages
+	go func() {
+		for e := range p.Events() {
+			switch ev := e.(type) {
+			case *confluentKafka.Message:
+				if ev.TopicPartition.Error != nil {
+					fmt.Printf("Delivery failed: %v\n", ev.TopicPartition)
+				} else {
+					fmt.Printf("Delivered message to %v\n", ev.TopicPartition)
+				}
+			}
+		}
+	}()
 
-	error := writer.WriteMessages(context, message)
-	if error != nil {
-		panic("Error on produce event")
-	}
+	p.Produce(&confluentKafka.Message{
+		TopicPartition: confluentKafka.TopicPartition{Topic: &event.Type, Partition: confluentKafka.PartitionAny},
+		Key:            []byte(event.Id),
+		Value:          model.EventToJson(event),
+	}, nil)
+
+	// Wait for message deliveries before shutting down
+	p.Flush(15 * 1000)
 }

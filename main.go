@@ -10,5 +10,5 @@ func main() {
 	router := gin.Default()
 	router.GET("/events", control.GetEvents)
 	router.POST("/events", control.PostEvent)
-	router.Run("localhost:7777")
+	router.Run("0.0.0.0:7777")
 }
