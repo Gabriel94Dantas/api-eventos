@@ -1,0 +1,17 @@
+version: '3.2'
+
+services:
+
+  api-eventos:
+    build: .
+    container_name: api-eventos-latest
+    hostname: api-eventos
+    ports:
+      - "7777:7777"
+    environment:
+      - BROKER_HOST='broker:29092'
+
+networks: 
+  default: 
+    external: 
+      name: kafka_confluent_network

@@ -30,4 +30,8 @@ This project was my initiative Gabriel Araujo Dantas a brazilian Computer Engine
 
 ## Docker
 
-We will develop the devops part yet.
+We begin the creation of Devops part that isn't the way we want, but we start the develop of this feature. For now, we have some important considerations:
+
+- When you work with two docker-compose you need to create the network first (docker network create your_network)
+- You have to put this network on all docker-compose (Now all container will be in the same subnet)
+- And that is our challenge how I can connect kafka in a container with a client in a container? I seriously don't know yet.
