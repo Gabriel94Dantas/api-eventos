@@ -33,14 +33,28 @@ This project was my initiative Gabriel Araujo Dantas a brazilian Computer Engine
 
 We begin the creation of Devops part that isn't the way we want, but we start the develop of this feature. For now, we have some important considerations:
 
-- When you work with two docker-compose you need to create the network first (docker network create --driver=bridge  --subnet=172.18.0.0/16  --ip-range=172.18.0.0/24  --gateway=172.18.0.1   my_network), this is necessary because you have use same network on all docker-compose
+- When you work with two docker-compose you need to create the network first (
+  ```
+  docker network create --driver=bridge  --subnet=172.18.0.0/16  --ip-range=172.18.0.0/24  --gateway=172.18.0.1   my_network
+  ```
+  ), this is necessary because you have use same network on all docker-compose
 - After that you have to add on your kafka docker-compose this (
+```
 networks: 
   default: 
     external: 
       name: kafka_confluent_network
+```
       )
-- And now you have to run all docker-compose and you are ready to use this API.
+- And now you have to run all docker-compose and you are ready to use this API
+```
+docker-compose up -d
+```
+or
+```
+docker-compose up -d --build
+```
+.
 
 ## Important information
 
