@@ -32,6 +32,27 @@ This project was my initiative Gabriel Araujo Dantas a brazilian Computer Engine
 
 We begin the creation of Devops part that isn't the way we want, but we start the develop of this feature. For now, we have some important considerations:
 
-- When you work with two docker-compose you need to create the network first (docker network create your_network)
-- You have to put this network on all docker-compose (Now all container will be in the same subnet)
-- And that is our challenge how I can connect kafka in a container with a client in a container? I seriously don't know yet.
+- When you work with two docker-compose you need to create the network first (docker network create --driver=bridge  --subnet=172.18.0.0/16  --ip-range=172.18.0.0/24  --gateway=172.18.0.1   my_network), this is necessary because you have use same network on all docker-compose
+- After that you have to add on your kafka docker-compose this (
+networks: 
+  default: 
+    external: 
+      name: kafka_confluent_network
+      )
+- And now you have to run all docker-compose and you are ready to use this API.
+
+## Important information
+
+We use the JSON cloudevent.io specification so is important to send a event with these characteristics.
+
+{
+    "id": "ac47faa1-3f11-4d3e-8e53-41e29cdf4b0c", 
+    "specVersion": "1.0", 
+    "source": "/product/domain/subdomain/service", 
+    "type": "br.com.example.correctTopic", 
+    "time": "2022-03-22T17:41:02",
+    "subject": "Estamos inserindo um evento no kafka da Confluent espia.", 
+    "correlationID": "", 
+    "dataContentType": "application/json", 
+    "data": "{info1: \"A\"}"
+}

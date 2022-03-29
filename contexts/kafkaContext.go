@@ -7,12 +7,15 @@ import (
 )
 
 func KafkaConnection() *confluentKafka.Producer {
+	var p *confluentKafka.Producer
+	var err error = nil
 
 	if os.Getenv("BROKER_HOST") == "" {
 		os.Setenv("BROKER_HOST", "localhost")
 	}
 
-	p, err := confluentKafka.NewProducer(&confluentKafka.ConfigMap{"bootstrap.servers": os.Getenv("BROKER_HOST")})
+	p, err = confluentKafka.NewProducer(&confluentKafka.ConfigMap{"bootstrap.servers": os.Getenv("BROKER_HOST")})
+
 	if err != nil {
 		panic(err)
 	}
