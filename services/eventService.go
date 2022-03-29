@@ -1,8 +1,12 @@
 package services
 
 import (
+	"context"
 	"fmt"
+	"os"
+	"time"
 
+	"github.com/confluentinc/confluent-kafka-go/kafka"
 	confluentKafka "github.com/confluentinc/confluent-kafka-go/kafka"
 
 	contex "facade-golang/api-eventos/contexts"
@@ -14,8 +18,12 @@ func InsertEventOnTopic(event model.Event) {
 	produceMessage(event)
 }
 
+func CreateTopic(topic model.Topic) {
+	createTopic(topic)
+}
+
 func produceMessage(event model.Event) {
-	p := contex.KafkaConnection()
+	p := contex.KafkaProducerConnection()
 
 	defer p.Close()
 
@@ -41,4 +49,38 @@ func produceMessage(event model.Event) {
 
 	// Wait for message deliveries before shutting down
 	p.Flush(15 * 1000)
+}
+
+func createTopic(topic model.Topic) {
+	a := contex.KafkaAdminCliConnectio()
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	// Create topics on cluster.
+	// Set Admin options to wait for the operation to finish (or at most 60s)
+	maxDur, err := time.ParseDuration("60s")
+	if err != nil {
+		panic("ParseDuration(60s)")
+	}
+	results, err := a.CreateTopics(
+		ctx,
+		// Multiple topics can be created simultaneously
+		// by providing more TopicSpecification structs here.
+		[]kafka.TopicSpecification{{
+			Topic:             topic.TopicName,
+			NumPartitions:     topic.NumPartition,
+			ReplicationFactor: topic.ReplicationFactor}},
+		// Admin options
+		kafka.SetAdminOperationTimeout(maxDur))
+	if err != nil {
+		fmt.Printf("Failed to create topic: %v\n", err)
+		os.Exit(1)
+	}
+
+	// Print results
+	for _, result := range results {
+		fmt.Printf("%s\n", result)
+	}
+
+	a.Close()
 }

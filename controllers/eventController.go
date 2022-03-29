@@ -26,3 +26,14 @@ func PostEvent(c *gin.Context) {
 	serv.InsertEventOnTopic(newEvent)
 	c.IndentedJSON(http.StatusCreated, newEvent)
 }
+
+func PostTopic(c *gin.Context) {
+	var newTopic model.Topic
+
+	if err := c.BindJSON(&newTopic); err != nil {
+		return
+	}
+
+	serv.CreateTopic(newTopic)
+	c.IndentedJSON(http.StatusCreated, newTopic)
+}
