@@ -56,3 +56,5 @@ We use the JSON cloudevent.io specification so is important to send a event with
     "dataContentType": "application/json", 
     "data": "{info1: \"A\"}"
 }
+
+Another important information is we use the confluent kafka community for this test you can find that on this link: https://github.com/confluentinc/cp-all-in-one/tree/7.0.1-post/cp-all-in-one-community 
