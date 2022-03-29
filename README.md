@@ -32,7 +32,7 @@ This project was my initiative Gabriel Araujo Dantas a brazilian Computer Engine
 
 We begin the creation of Devops part that isn't the way we want, but we start the develop of this feature. For now, we have some important considerations:
 
-- When you work with two docker-compose you need to create the network first (docker network create --driver=bridge  --subnet=172.18.0.0/16  --ip-range=172.18.0.0/24  --gateway=172.18.0.1   my_network), this is necessary because you have use same network on all docker-compose
+- When you work with two docker-compose you need to create the network first (docker network create --driver=bridge  --subnet=172.18.0.0/16  --ip-range=172.18.0.0/24  --gateway=172.18.0.1   my_network), this is necessary because you have to use same network on all docker-compose
 - After that you have to add on your kafka docker-compose this (
 networks: 
   default: 
@@ -57,4 +57,4 @@ We use the JSON cloudevent.io specification so is important to send a event with
     "data": "{info1: \"A\"}"
 }
 
-Another important information is we use the confluent kafka community for this test you can find that on this link: https://github.com/confluentinc/cp-all-in-one/tree/7.0.1-post/cp-all-in-one-community 
+Another important information is we use the confluent kafka community for this test. You can find that on this link: https://github.com/confluentinc/cp-all-in-one/tree/7.0.1-post/cp-all-in-one-community 
