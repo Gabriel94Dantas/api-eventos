@@ -8,6 +8,7 @@ For this example, we will use as broker Kafka and we use Golang as a programming
 
 - One endpoint http://localhost:7777/events/ with the GET verb
 - One endpoint http://localhost:7777/events/ with the POST verb
+- One endpoint http://localhost:7777/topics with the POST verb
 - A service with the main responsability of write a event on Kafka topic
 
 ## Tech
@@ -44,7 +45,7 @@ networks:
 ## Important information
 
 We use the JSON cloudevent.io specification so is important to send a event with these characteristics.
-
+```
 {
     "id": "ac47faa1-3f11-4d3e-8e53-41e29cdf4b0c", 
     "specVersion": "1.0", 
@@ -56,3 +57,12 @@ We use the JSON cloudevent.io specification so is important to send a event with
     "dataContentType": "application/json", 
     "data": "{info1: \"A\"}"
 }
+```
+If you want to create a topic you have to send this body:
+```
+{
+    "topicName": "br.com.example.correctTopic",
+    "numPartition": 1,
+    "replicationFactor": 1
+}
+```
