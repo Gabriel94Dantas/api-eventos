@@ -16,7 +16,7 @@ For this example, we will use as broker Kafka and we use Golang as a programming
 API Eventos uses only Golang but we will specify the most important libs:
 
 - github.com/gin-gonic/gin -> Used to create the web server facilities
-- github.com/segmentio/kafka-go -> Used to communicate with Kafka
+- github.com/confluentinc/confluent-kafka-go/kafka -> Used to communicate with Kafka
 - context -> Used to capture the background context of the application
 - encoding/json -> Used to encode my struct to json format as byte array
 
