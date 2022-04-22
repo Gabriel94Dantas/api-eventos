@@ -27,7 +27,7 @@ To run this application you only have to open your terminal, go for the project 
 
 ## Development
 
-This project was my initiative Gabriel Araujo Dantas a brazilian Computer Engineer and my collegue Lucas Henrique A. de Paula a brazilian Computer Scientist.
+This project was initiated by Gabriel Araujo Dantas a Brazilian Computer Engineer and my colleague Lucas Henrique A. de Paula a Brazilian Computer Scientist.
 
 ## Docker
 
