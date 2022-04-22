@@ -31,7 +31,7 @@ This project was initiated by Gabriel Araujo Dantas a Brazilian Computer Enginee
 
 ## Docker
 
-We begin the creation of Devops part that isn't the way we want, but we start the develop of this feature. For now, we have some important considerations:
+We begin the creation of Devops part that isn't the way we want, but we start the develop of this feature. For while, we have some important considerations:
 
 - When you work with two docker-compose you need to create the network first (
   ```
