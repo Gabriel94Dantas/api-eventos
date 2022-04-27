@@ -16,7 +16,7 @@ For this example, we will use as broker Kafka and we use Golang as a programming
 API Eventos uses only Golang but we will specify the most important libs:
 
 - github.com/gin-gonic/gin -> Used to create the web server facilities
-- github.com/segmentio/kafka-go -> Used to communicate with Kafka
+- github.com/confluentinc/confluent-kafka-go/kafka -> Used to communicate with Kafka
 - context -> Used to capture the background context of the application
 - encoding/json -> Used to encode my struct to json format as byte array
 
@@ -27,11 +27,11 @@ To run this application you only have to open your terminal, go for the project 
 
 ## Development
 
-This project was my initiative Gabriel Araujo Dantas a brazilian Computer Engineer and my collegue Lucas Henrique A. de Paula a brazilian Computer Scientist.
+This project was initiated by Gabriel Araujo Dantas a Brazilian Computer Engineer and my colleague Lucas Henrique A. de Paula a Brazilian Computer Scientist.
 
 ## Docker
 
-We begin the creation of Devops part that isn't the way we want, but we start the develop of this feature. For now, we have some important considerations:
+We begin the creation of Devops part that isn't the way we want, but we start the develop of this feature. For while, we have some important considerations:
 
 - When you work with two docker-compose you need to create the network first (
   ```
