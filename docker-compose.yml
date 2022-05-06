@@ -7,7 +7,7 @@ services:
     container_name: api-eventos-latest
     hostname: api-eventos
     ports:
-      - 7777:7777
+      - 80:80
     environment:
       - BROKER_HOST=broker:29092
 

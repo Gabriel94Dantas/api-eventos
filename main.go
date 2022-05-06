@@ -11,5 +11,5 @@ func main() {
 	router.GET("/events", control.GetEvents)
 	router.POST("/events", control.PostEvent)
 	router.POST("/topics", control.PostTopic)
-	router.Run("0.0.0.0:7777")
+	router.Run("0.0.0.0:80")
 }
